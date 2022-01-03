@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <link rel="preconnect" href="https://fonts.gstatic.com" />
+    <link href="https://fonts.googleapis.com/css2?family=Rubik:wght@400;500;600;700&display=swap" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Courgette&family=Kaushan+Script&family=Pacifico&display=swap" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/general.css') }}" />
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/styleHome.css') }}" />
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/styleMenu.css') }}" />
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+
+    <style>
+        body {
+            font-family: "Courgette", cursive;
+            background-color: rgb(250, 240, 207);
+        }
+        
+        .category-heading {
+            font-size: 7rem;
+            font-weight: 900;
+            /* color: #fff; */
+            color: #333;
+            text-align: center;
+            text-transform: capitalize;
+            letter-spacing: 0.5rem;
+            text-shadow: 0.3rem 0.3rem 0.3rem #000;
+            margin-bottom: 5%;
+            margin-top: 5%;
+        }
+        
+        .add-to-cart {
+            background-color: orange;
+            margin-top: 8%;
+            margin-left: 12%;
+        }
+    </style>
+
+    <script type="module" src="https://unpkg.com/ionicons@5.4.0/dist/ionicons/ionicons.esm.js"></script>
+    <script nomodule="" src="https://unpkg.com/ionicons@5.4.0/dist/ionicons/ionicons.js"></script>
+
+    <title>Work Info</title>
+</head>
+
+<body>
+    <header class="header">
+        <a href="/">
+            <img class="logo" alt="Omnifood logo" src="static/img/omnifood-logo.png" />
+        </a>
+        <nav class="main-nav">
+            <ul class="main-nav-list">
+                <!-- <li><a class="main-nav-link" href="/">Home</a></li> -->
+                <li><a class="main-nav-link" href="/">Home</a></li>
+                <li><a class="main-nav-link" href="/menu">Menu</a></li>
+                {% if not session['admin'] %}
+                <li><a class="main-nav-link" href="/reservations">Reservations</a></li>
+                <li><a class="main-nav-link" href="/cart">Cart</a></li>
+                <li><a class="main-nav-link" href="/myorders">My Orders</a></li>
+                {% endif %} {%if session['admin'] %}
+                <li><a class="main-nav-link" href="/customersInfo">Customers</a></li>
+                {% endif %} {% if session['CustomerId'] %} {% if not session['admin'] %}
+                <li><a class="main-nav-link nav-cta" href="/userhomepage"><span class="glyphicon glyphicon-user"></span>&nbsp;&nbsp;&nbsp;{{session['Customername']}}</a></li>
+                {% endif %}
+                <li><a class="main-nav-link nav-cta" href="/logout">Logout</a></li>
+                {%else%}
+                <li><a class="main-nav-link nav-cta" href="/login"><span class="glyphicon glyphicon-user"></span>&nbsp;&nbsp;Log in</a></li>
+                {% endif %}
+            </ul>
+        </nav>
+    </header>
+    <h1 align="center">Restaurant EWallet: {{RestaurantWallet}}</h1>
+    <div class="container" style="padding-top: 20px; background-color: ivory; border: lavender solid 3px;">
+        <div class="media">
+            <div class="media-body" style="padding: 20px;">
+                <label for="empname"><h4>Employee Name:</h4></label>
+                <span class="media-heading" id="empname"><strong style="font-size: x-large;">{{empinfo[1]}}</strong></span>
+                <br>
+                <br>
+                <label for="empname"><h4>Phone Number:</h4></label>
+                <span class="media-heading" id="empname"><strong style="font-size: x-large;">{{empinfo[3]}}</strong></span>
+                <br>
+                <br>
+                <label for="empname"><h4>Address:</h4></label>
+                <span class="media-heading" id="empname"><strong style="font-size: x-large;">{{empinfo[2]}}</strong></span>
+            </div>
+            <div class="media-right">
+                <img src="https://img.icons8.com/bubbles/100/000000/user.png" class="media-object" style=" height:180px; width:180px">
+            </div>
+        </div>
+    </div>
+    <div class="container">
+        <h1><strong>Reservation Information</strong</h1>
+    </div>
+    <div class="container" style="max-height: 500px; overflow: scroll;">
+        <table class="table table-hover">
+            <thead>
+              <tr>
+                <th>Reservation ID</th>
+                <th>Table Number</th>
+                <th>Slot</th>
+                <th>Date</th>
+                <th>Suggesition</th>
+              </tr>
+            </thead>
+            <tbody>
+                {% for i in reservations %}
+                    <tr>
+                        <td>{{i[0]}}</td>
+                        <td>{{i[1]}}</td>
+                        <td>{{i[2]}}</td>
+                        <td>{{i[3]}}</td>
+                        <td>{{i[4]}}</td>
+                    </tr>
+                 {% endfor %}
+            </tbody>
+          </table>
+    </div>
+    <div class="container">
+        <h1><strong>Orders</strong</h1>
+    </div>
+    <div class="container" style="max-height: 500px; overflow: scroll;">
+      <div class="row">
+        <div class="col-sm-1" style="font-weight: 800; font-size: 1.75rem">OrderId</div>
+        <div class="col-sm-2" style="font-weight: 800; font-size: 1.75rem">Ordered Date</div>
+        <div class="col-sm-2" style="font-weight: 800; font-size: 1.75rem">Ordered Time</div>
+        <div class="col-sm-2" style="font-weight: 800; font-size: 1.75rem">Delivered Time</div>
+        <div class="col-sm-1" style="font-weight: 800; font-size: 1.75rem">Total Price</div>
+        <div class="col-sm-2" style="font-weight: 800; font-size: 1.75rem">Payment Status</div>
+        <div class="col-sm-2" style="font-weight: 800; font-size: 1.75rem">Delivery Status</div>
+      </div>
+      <div class="panel-group" id="accordion">
+        {% for i in range(0,orderstaken|length) %}
+        <div class="panel panel-default">
+          <div class="panel-heading">
+            <h4 class="panel-title">
+              <a
+                data-toggle="collapse"
+                data-parent="#accordion"
+                href="#collapse{{i+1}}" 
+              >
+                <div class="row">
+                  <div class="col-sm-1">{{orderstaken[i][0]}}</div>
+                  <div class="col-sm-2">{{orderstaken[i][1]}}</div>
+                  <div class="col-sm-2">{{orderstaken[i][2]}}</div>
+                  <div class="col-sm-2">{{delivery_info[orderstaken[i][0]][0][3]}}</div>
+                  <div class="col-sm-1">&#8377;{{orderstaken[i][5]}}</div>
+                  <div class="col-sm-2">
+                    {% if orderstaken[i][0] in delivery_info.keys()  %}
+                      {% if delivery_info[orderstaken[i][0]][0][4]=="Paid" %}
+                        <span class="label label-success">Paid</span>
+                      {% elif delivery_info[orderstaken[i][0]][0][4]=="Cash-On-Delivery" %}
+                        <span class="label label-info">Cash-On-Delivery</span>
+                      {% endif %} 
+                    {%endif%}
+                  </div>
+                  <div class="col-sm-2">
+                    {% if orderstaken[i][0] in delivery_info.keys()  %}
+                      {% if delivery_info[orderstaken[i][0]][0][2]=="Delivered" %}
+                        <span class="label label-success">Delivered</span>
+                      {% elif delivery_info[orderstaken[i][0]][0][2]=="Preparing" %}
+                        <span class="label label-info">Preparing</span>
+                      {% elif delivery_info[orderstaken[i][0]][0][2]=="Enroute" %}
+                        <span class="label label-info">Enroute</span>
+                      {% endif %} 
+                    {%endif%}
+                  </div>
+                </div>
+              </a>
+            </h4>
+          </div>
+          <div id="collapse{{i+1}}" class="panel-collapse collapse">
+            <div class="panel-body">
+              <div class="row">
+                <div class="col-sm-1" style="font-weight: 800">S.No</div>
+                <div class="col-sm-4" style="font-weight: 800">Dish Name</div>
+                <div class="col-sm-4" style="font-weight: 800">Quantity</div>
+                <div class="col-sm-3" style="font-weight: 800">Price</div>
+              </div>
+              <br />
+              {% for j in range(0,orderdetails[orderstaken[i][4]]|length)%}
+              <div class="row">
+                <div class="col-sm-1">{{j+1}}</div>
+                <div class="col-sm-4">
+                  {{orderdetails[orderstaken[i][4]][j][0]}}
+                </div>
+                <div class="col-sm-4">
+                  {{orderdetails[orderstaken[i][4]][j][1]}}
+                </div>
+                <div class="col-sm-3">
+                  &#8377;{{orderdetails[orderstaken[i][4]][j][2]}}
+                </div>
+              </div>
+              <br>
+              {% endfor %}
+              
+            </div>
+            <div class="panel-footer">
+              <div class="container">
+                <div class="row">
+                <div class="col-sm-3" style="font-weight: 800">
+                  Delivery Agent: {{delivery_agent_info[orderstaken[i][0]][0][0]}}
+                </div>
+                <div class="col-sm-3" style="font-weight: 800">
+                  Agent Mobile: {{delivery_agent_info[orderstaken[i][0]][0][1]}}
+                </div>
+                <div class="col-sm-3" style="font-weight: 800">
+                  Delivery Charges: &#8377; 30.0
+                </div>
+                <div class="col-sm-3" style="font-weight: 800">
+                  Total Price : &#8377;{{orderstaken[i][5]}}
+                </div>
+              </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        {% endfor %}
+      </div>
+    <form action="\addemployee" >
+      <button class="btn btn-danger btn-lg" type="submit" style="margin-left: 45%; margin-top: 50px;"  >Add Employee</button>
+    </form>
+  </body>
+</html>

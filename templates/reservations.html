@@ -1,0 +1,341 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+
+    <link rel="stylesheet" href="fonts/icomoon/style.css">
+
+    <link href="https://fonts.googleapis.com/css2?family=Courgette&family=Kaushan+Script&family=Pacifico&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <script type="module" src="https://unpkg.com/ionicons@5.4.0/dist/ionicons/ionicons.esm.js"></script>
+    <script nomodule="" src="https://unpkg.com/ionicons@5.4.0/dist/ionicons/ionicons.js"></script>
+    <link rel="preconnect" href="https://fonts.gstatic.com" />
+    <link href="https://fonts.googleapis.com/css2?family=Rubik:wght@400;500;600;700&display=swap" rel="stylesheet" />
+
+    <script type="module" src="https://unpkg.com/ionicons@5.4.0/dist/ionicons/ionicons.esm.js"></script>
+    <script nomodule="" src="https://unpkg.com/ionicons@5.4.0/dist/ionicons/ionicons.js"></script>
+
+
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/general.css') }}" />
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/styleHome.css') }}" />
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/styleMenu.css') }}" />
+
+
+
+
+
+
+
+</head>
+
+<title>resevartions</title>
+<style>
+    /* body {
+        font-family: "Roboto", sans-serif;
+        background-color: rgb(250, 240, 207);
+        line-height: 1.9;
+        color: #8c8c8c;
+        position: relative;
+    } */
+    body {
+            font-family: "Courgette", cursive;
+            background-color: rgb(250, 240, 207);
+        }
+    .content {
+        padding: 7rem 0;
+    }
+    
+    .main-nav {
+        width: initial;
+    }
+    
+    .form-control {
+        border: none;
+        border-bottom: 1px solid #ccc;
+        padding-left: 0;
+        padding-right: 0;
+        border-radius: 0;
+        background: none;
+        font-size: medium;
+    }
+    
+    .form-control:active,
+    .form-control:focus {
+        outline: none;
+        -webkit-box-shadow: none;
+        box-shadow: none;
+        border-color: #000;
+    }
+    
+    .col-form-label {
+        color: #000;
+        font-size: 13px;
+    }
+    
+    .btn,
+    .form-control,
+    .custom-select {
+        height: 45px;
+    }
+    
+    .custom-select:active,
+    .custom-select:focus {
+        outline: none;
+        -webkit-box-shadow: none;
+        box-shadow: none;
+        border-color: #000;
+    }
+    
+    .btn {
+        border: none;
+        border-radius: 0;
+        font-size: 12px;
+        letter-spacing: .2rem;
+        text-transform: uppercase;
+    }
+    
+    .btn.btn-primary {
+        background: #e67e22;
+        color: #fff;
+        padding: 15px 20px;
+    }
+    
+    .btn:hover {
+        color: #fff;
+    }
+    
+    .btn:active,
+    .btn:focus {
+        outline: none;
+        -webkit-box-shadow: none;
+        box-shadow: none;
+    }
+    
+    .contact-wrap .col-form-label {
+        font-size: 14px;
+        color: #b3b3b3;
+        margin: 0 0 10px 0;
+        display: inline-block;
+        padding: 0;
+    }
+    
+    .contact-wrap .form,
+    .contact-wrap .contact-info {
+        padding: 40px;
+    }
+    
+    .contact-wrap .contact-info {
+        color: rgba(255, 255, 255, 0.5);
+    }
+    
+    .contact-wrap .contact-info ul li {
+        margin-bottom: 15px;
+        color: rgba(255, 255, 255, 0.5);
+    }
+    
+    .contact-wrap .contact-info ul li .wrap-icon {
+        font-size: 20px;
+        color: #fff;
+        margin-top: 5px;
+    }
+    
+    .contact-wrap .form {
+        background: #fff;
+    }
+    
+    .contact-wrap .form h3 {
+        color: #e67e22;
+        font-size: 20px;
+        margin-bottom: 30px;
+    }
+    
+    .contact-wrap .contact-info {
+        height: 100vh;
+        background-size: cover;
+        background-position: center center;
+        background-repeat: no-repeat;
+    }
+    
+    .contact-wrap .contact-info a {
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        left: 0;
+        right: 0;
+    }
+    
+    @media (max-width: 1199.98px) {
+        .contact-wrap .contact-info {
+            height: 400px !important;
+        }
+    }
+    
+    .contact-wrap .contact-info h3 {
+        color: #fff;
+        font-size: 20px;
+        margin-bottom: 30px;
+    }
+    
+    .header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        background-color: rgb(73, 41, 0);
+        /* background-color: #fae5d3; */
+        /* Because we want header to be sticky later */
+        height: 9.6rem;
+        padding: 0 4.8rem;
+    }
+    
+    .logo {
+        height: 8rem;
+    }
+    /**************************/
+    /* NAVIGATION */
+    /**************************/
+    
+    .main-nav-list {
+        list-style: none;
+        display: flex;
+        align-items: center;
+        gap: 3.2rem;
+    }
+    
+    .main-nav-link:link,
+    .main-nav-link:visited {
+        display: inline-block;
+        text-decoration: none;
+        /* color: #333; */
+        color: rgb(250, 240, 207);
+        font-weight: 500;
+        font-size: 1.8rem;
+        transition: all 0.3s;
+    }
+    
+    .main-nav-link:hover,
+    .main-nav-link:active {
+        color: #cf711f;
+    }
+    
+    .main-nav-link.nav-cta:link,
+    .main-nav-link.nav-cta:visited {
+        padding: 1.2rem 2.4rem;
+        border-radius: 9px;
+        /* color: #fff; */
+        color: rgb(73, 41, 0);
+        background-color: rgb(250, 240, 207);
+    }
+    
+    .main-nav-link.nav-cta:hover,
+    .main-nav-link.nav-cta:active {
+        background-color: #cf711f;
+    }
+</style>
+</head>
+
+<body>
+
+    <header class="header" style="height: 12rem; padding: 0 4.8rem;">
+        <a href="/">
+            <img class="logo" alt="Omnifood logo" src="static/img/omnifood-logo.png" />
+        </a>
+        <nav class="main-nav">
+            <ul class="main-nav-list">
+                <!-- <li><a class="main-nav-link " href="/ ">Home</a></li> -->
+                <li><a class="main-nav-link " style="font-size: 2.3rem " href="/ ">Home</a></li>
+                {% if not session['admin'] %}
+                <li><a class="main-nav-link " style="font-size: 2.3rem " href="/menu ">Menu</a></li>
+                <li><a class="main-nav-link " style="font-size: 2.3rem " href="/cart ">Cart</a></li>
+                <li><a class="main-nav-link " style="font-size: 2.3rem " href="/myorders ">My Orders</a></li>
+                {% endif %} {%if session['admin'] %}
+                <li><a class="main-nav-link " style="font-size: 2.3rem " href="/admininfo ">Work Info</a></li>
+                <li><a class="main-nav-link " style="font-size: 2.3rem " href="/customersInfo ">Customers</a></li>
+                {% endif %} {% if session['CustomerId'] %} {% if not session['admin'] %}
+                <li><a class="main-nav-link nav-cta " style="font-size: 2.3rem; padding: 1.7rem 3rem; " href="/userhomepage "><span class="glyphicon glyphicon-user "></span>&nbsp;&nbsp;&nbsp;{{session['Customername']}}</a></li>
+                {% endif %}
+                <li><a class="main-nav-link nav-cta " style="font-size: 2.3rem; padding: 1.7rem 3rem; " href="/logout ">Logout</a></li>
+                {%else%}
+                <li><a class="main-nav-link nav-cta " style="font-size: 2.3rem " href="/login "><span class="glyphicon glyphicon-user "></span>&nbsp;&nbsp;Log in</a></li>
+                {% endif %}
+            </ul>
+        </nav>
+    </header>
+</body>
+
+</html>
+<div class="content">
+
+    <div class="container" style="margin-left: 30%;">
+        <div class="row align-items-stretch no-gutters contact-wrap">
+            <div class="col-md-6">
+                <div class="form ">
+                    <h3 align="center">RESERVATIONS</h3>
+                    <br>
+                    <div class="message" style="font-size: 2.5rem;">{{message}}</div>
+                    <br><br>
+                    <form action="/check_availability" class="mb-5" method="post" id="contactForm" name="contactForm">
+                        <div class="row">
+                            <div class="col-md-6 form-group mb-5">
+                                <label style="font-size:large" for="selectDate">Select Date</label>
+                                <input class="form-control" id="selectDate" type="date" name="date" min="{{tomdate[0][0]}}" />
+                            </div>
+                            <div class="col-md-6 form-group mb-5">
+                                <label style="font-size:large" for="cap">Select Capcity</label>
+                                <input class="form-control" name="capacity" id="cap" list="capacities" />
+                                <datalist id="capacities">
+                                      {%for capacity in capacities%}
+                                      <option value="{{capacity[0]}}">{{capacity[0]}}</option>
+                                      {%endfor%}
+                                    </datalist>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12 form-group">
+                                <input type="submit" value="check-availability" class="btn btn-primary rounded-0 py-2 px-4">
+                                <span class="submitting"></span>
+                            </div>
+                        </div>
+                    </form><br>
+                    <form action="/make_reservation" method="post">
+                        <div class="row">
+                            <div class="col-md-6 form-group mb-5">
+                                <label style="font-size:large" for="availableSlots">Select TimeSlot</label>
+                                <select class="form-control" id="availableSlots" name="slotTable">
+                                   {%for slot in slot_table.keys()%}
+                                  <option value="{{slot}}+{{slot_table[slot]}}">{{slot}}</option>
+                                   {%endfor%}
+                                    </select>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-12 form-group mb-5">
+                                <label style="font-size:large" for="message" class="col-form-label">Message</label>
+                                <textarea class="form-control" name="suggesitions" id="message" cols="30" rows="4" placeholder="Write your message"></textarea>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12 form-group">
+                                <input type="submit" value="make reservation" class="btn btn-primary rounded-0 py-2 px-4">
+
+                            </div>
+                        </div>
+                        <br>
+                        
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+</div>
+</body>
+
+</html>
+
+</html>

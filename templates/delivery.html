@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous" />
+    <script src="http://maps.google.com/maps/api/js?key=YOUR_API_KEY"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gmaps.js/0.4.25/gmaps.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/style.css') }}" />
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css" />
+    <title>Deliveries</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <link rel="preconnect" href="https://fonts.gstatic.com" />
+    <link href="https://fonts.googleapis.com/css2?family=Rubik:wght@400;500;600;700&display=swap" rel="stylesheet" />
+
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/general.css') }}" />
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/styleHome.css') }}" />
+
+    <script type="module" src="https://unpkg.com/ionicons@5.4.0/dist/ionicons/ionicons.esm.js"></script>
+    <script nomodule="" src="https://unpkg.com/ionicons@5.4.0/dist/ionicons/ionicons.js"></script>
+
+    <style>
+        body {
+            font-family: "Courgette", cursive;
+            background-color: rgb(250, 240, 207);
+        }
+        
+        .status-change-btn {
+            margin-top: 1%;
+            margin-left: 42%;
+            padding: 1rem;
+            background-color: rgb(2, 170, 2);
+            color: rgb(248, 243, 225);
+            border-radius: 2px;
+            border: 0px;
+        }
+    </style>
+
+</head>
+
+<body>
+    <header class="header">
+        <a href="/">
+            <img class="logo" alt="Omnifood logo" src="static/img/omnifood-logo.png" />
+        </a>
+        <nav class="main-nav">
+            <ul class="main-nav-list">
+                <li><a class="main-nav-link nav-cta" href="/login">Back to Customer Login</a></li>
+                <!-- <li><a class="main-nav-link" href="/">Home</a></li> -->
+                <!-- <li><a class="main-nav-link" href="/menu">Menu</a></li>
+          <li>
+            <a class="main-nav-link" href="/reservations">Reservations</a>
+          </li>
+          <li><a class="main-nav-link" href="/cart">Cart</a></li>
+          <li><a class="main-nav-link" href="/myorders">My Orders</a></li>
+          <li><a class="main-nav-link" href="#">About Us</a></li> -->
+                <!-- <li><a class="main-nav-link nav-cta" href="/login"></a></li> -->
+            </ul>
+        </nav>
+    </header>
+    <main>
+
+        {%if currentOrder==True%}
+        <h1 style="margin-left: 40%; margin-bottom: 2rem; color: rgb(73, 41, 0);">Current Order</h1>
+        <div class="container-fluid">
+            <div class="row" style="color: rgb(104, 63, 9);">
+                <div class="col-sm-1" style="font-weight: 800; font-size: 1.75rem">OrderId</div>
+                <div class="col-sm-2" style="font-weight: 800; font-size: 1.75rem">Ordered Date</div>
+                <div class="col-sm-2" style="font-weight: 800; font-size: 1.75rem">Ordered Time</div>
+                <div class="col-sm-2" style="font-weight: 800; font-size: 1.75rem">Delivered Time</div>
+                <div class="col-sm-1" style="font-weight: 800; font-size: 1.75rem">Total Price</div>
+                <div class="col-sm-2" style="font-weight: 800; font-size: 1.75rem">Payment Status</div>
+                <div class="col-sm-2" style="font-weight: 800; font-size: 1.75rem">Delivery Status</div>
+            </div>
+            <div class="panel-group" id="accordion">
+                {% for delivery in deliveries %} {% if delivery[2]!="Delivered" %}
+                <div class="panel panel-default" style="background-color: rgb(255, 251, 236);; color: rgb(73, 41, 0);">
+                    <div class="panel-heading" style="background-color: rgb(133, 75, 1); color: rgb(253, 248, 229);">
+                        <h4 class="panel-title" style="background-color: rgb(133, 75, 1); color: rgb(253, 248, 229);">
+                            <a data-toggle="collapse" data-parent="#accordion" href="#collapse{{delivery[1]+1}}">
+
+                                <div class="row" style="background-color: rgb(133, 75, 1); color: rgb(250, 240, 207);">
+                                    <div class="col-sm-1">{{delivery[1]}}</div>
+                                    <div class="col-sm-2">{{assignedOrders[delivery[1]][1]}}</div>
+                                    <div class="col-sm-2">{{assignedOrders[delivery[1]][2]}}</div>
+                                    <div class="col-sm-2">{{delivery[3]}}</div>
+                                    <div class="col-sm-1">&#8377;{{assignedOrders[delivery[1]][5]}}</div>
+                                    <div class="col-sm-2">
+                                        {% if delivery[4]=="Paid" %}
+                                        <span class="label label-success">Paid</span> {% elif delivery[4]=="Cash-On-Delivery" %}
+                                        <span class="label label-info">Cash-On-Delivery</span> {% endif %}
+                                    </div>
+                                    <div class="col-sm-2">
+                                        {% if delivery[2]=="Delivered" %}
+                                        <span class="label label-success">Delivered</span> {% elif delivery[2]=="Preparing" %}
+                                        <span class="label label-info">Preparing</span> {% elif delivery[2]=="Enroute" %}
+                                        <span class="label label-info">Enroute</span> {% endif %}
+                                    </div>
+                                </div>
+                            </a>
+                        </h4>
+                    </div>
+                    <div id="collapse{{delivery[1]+1}}" class="panel-collapse collapse">
+                        <div class="panel-body">
+                            <div class="row">
+                                <div class="col-sm-1" style="font-weight: 800">S.No</div>
+                                <div class="col-sm-4" style="font-weight: 800">Dish Name</div>
+                                <div class="col-sm-4" style="font-weight: 800">Quantity</div>
+                                <div class="col-sm-3" style="font-weight: 800">Price</div>
+                            </div>
+                            <br /> {% for j in range(0,orderdetails[delivery[1]]|length)%}
+                            <div class="row">
+                                <div class="col-sm-1">{{j+1}}</div>
+                                <div class="col-sm-4">
+                                    {{orderdetails[delivery[1]][j][0]}}
+                                </div>
+                                <div class="col-sm-4">
+                                    {{orderdetails[delivery[1]][j][1]}}
+                                </div>
+                                <div class="col-sm-3">
+                                    &#8377;{{orderdetails[delivery[1]][j][2]}}
+                                </div>
+                            </div>
+                            <br> {% endfor %}
+
+                        </div>
+                        <div class="panel-footer" style="background-color: rgb(245, 189, 106); color: rgb(90, 90, 90);">
+                            <div class="container">
+                                <div class="row">
+                                    <div class="col-sm-3" style="font-weight: 800">
+                                        Customer: {{customer_info[delivery[1]][0]}}
+                                    </div>
+                                    <div class="col-sm-3" style="font-weight: 800">
+                                        Customer Mobile: {{customer_info[delivery[1]][1]}}
+                                    </div>
+                                    <div class="col-sm-6" style="font-weight: 800">
+                                        Address: {{customer_info[delivery[1]][2]}}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <form action="/order_status_change" method="post">
+                    <!-- (Preparing -> Enroute)  (Enroute -> Delivered, COD -> Paid) -->
+                    {% if delivery[2]=="Preparing" %}
+                    <button type="submit" value="{{delivery[1]}}" name="preparing_to_enroute" class="status-change-btn">Change Status to Enroute</button> {% elif delivery[2]=="Enroute" %}
+                    <button type="submit" value="{{delivery[1]}}" name="enroute_to_delivered" class="status-change-btn">Change Status to Delivered</button> {% endif %}
+                </form>
+
+                {%endif%} {% endfor %}
+            </div>
+            {%else%}
+            <h1 style="margin-left: 40%; margin-bottom: 2rem; color: rgb(73, 41, 0);">No Current Orders</h1>
+            {%endif%}
+
+
+            <h1 style="margin-left: 40%; margin-bottom: 2rem; color: rgb(73, 41, 0);">All Assigned Orders</h1>
+            <div class="container-fluid">
+                <div class="row" style=" color: rgb(104, 63, 9);">
+                    <div class="col-sm-1" style="font-weight: 800; font-size: 1.75rem">OrderId</div>
+                    <div class="col-sm-2" style="font-weight: 800; font-size: 1.75rem">Ordered Date</div>
+                    <div class="col-sm-2" style="font-weight: 800; font-size: 1.75rem">Ordered Time</div>
+                    <div class="col-sm-2" style="font-weight: 800; font-size: 1.75rem">Delivered Time</div>
+                    <div class="col-sm-1" style="font-weight: 800; font-size: 1.75rem">Total Price</div>
+                    <div class="col-sm-2" style="font-weight: 800; font-size: 1.75rem">Payment Status</div>
+                    <div class="col-sm-2" style="font-weight: 800; font-size: 1.75rem">Delivery Status</div>
+                </div>
+                <div class="panel-group" id="accordion">
+                    {% for delivery in deliveries %}
+                    <div class="panel panel-default" style="background-color: rgb(255, 251, 236);; color: rgb(73, 41, 0);">
+                        <div class="panel-heading" style="background-color: rgb(133, 75, 1); color: rgb(248, 243, 225);">
+                            <h4 class="panel-title" style="background-color: rgb(133, 75, 1); color: rgb(253, 248, 229);">
+                                <a data-toggle="collapse" data-parent="#accordion" href="#collapse{{delivery[1]+1}}">
+                                    <div class="row">
+                                        <div class="col-sm-1">{{delivery[1]}}</div>
+                                        <div class="col-sm-2">{{assignedOrders[delivery[1]][1]}}</div>
+                                        <div class="col-sm-2">{{assignedOrders[delivery[1]][2]}}</div>
+                                        <div class="col-sm-2">{{delivery[3]}}</div>
+                                        <div class="col-sm-1">&#8377;{{assignedOrders[delivery[1]][5]}}</div>
+                                        <div class="col-sm-2">
+                                            {% if delivery[4]=="Paid" %}
+                                            <span class="label label-success">Paid</span> {% elif delivery[4]=="Cash-On-Delivery" %}
+                                            <span class="label label-info">Cash-On-Delivery</span> {% endif %}
+                                        </div>
+
+
+                                        <div class="col-sm-2">
+                                            {% if delivery[2]=="Delivered" %}
+                                            <span class="label label-success">Delivered</span> {% elif delivery[2]=="Preparing" %}
+                                            <span class="label label-info">Preparing</span> {% elif delivery[2]=="Enroute" %}
+                                            <span class="label label-info">Enroute</span> {% endif %}
+                                        </div>
+                                    </div>
+                                </a>
+                            </h4>
+                        </div>
+                        <div id="collapse{{delivery[1]+1}}" class="panel-collapse collapse">
+                            <div class="panel-body">
+                                <div class="row">
+                                    <div class="col-sm-1" style="font-weight: 800">S.No</div>
+                                    <div class="col-sm-4" style="font-weight: 800">Dish Name</div>
+                                    <div class="col-sm-4" style="font-weight: 800">Quantity</div>
+                                    <div class="col-sm-3" style="font-weight: 800">Price</div>
+                                </div>
+                                <br /> {% for j in range(0,orderdetails[delivery[1]]|length)%}
+                                <div class="row">
+                                    <div class="col-sm-1">{{j+1}}</div>
+                                    <div class="col-sm-4">
+                                        {{orderdetails[delivery[1]][j][0]}}
+                                    </div>
+                                    <div class="col-sm-4">
+                                        {{orderdetails[delivery[1]][j][1]}}
+                                    </div>
+                                    <div class="col-sm-3">
+                                        &#8377;{{orderdetails[delivery[1]][j][2]}}
+                                    </div>
+                                </div>
+                                <br> {% endfor %}
+
+                            </div>
+                            <div class="panel-footer" style="background-color: rgb(245, 189, 106); color: rgb(90, 90, 90);">
+                                <div class="container">
+                                    <div class="row">
+                                        <div class="col-sm-3" style="font-weight: 800">
+                                            Customer: {{customer_info[delivery[1]][0]}}
+                                        </div>
+                                        <div class="col-sm-3" style="font-weight: 800">
+                                            Customer Mobile: {{customer_info[delivery[1]][1]}}
+                                        </div>
+                                        <div class="col-sm-6" style="font-weight: 800">
+                                            Address: {{customer_info[delivery[1]][2]}}
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+    </main>
+</body>
+
+</html>

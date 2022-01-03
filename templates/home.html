@@ -1,0 +1,337 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <link rel="preconnect" href="https://fonts.gstatic.com" />
+    <link href="https://fonts.googleapis.com/css2?family=Rubik:wght@400;500;600;700&display=swap" rel="stylesheet" />
+    <!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css"> -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Courgette&family=Kaushan+Script&family=Pacifico&display=swap" rel="stylesheet">
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/general.css') }}" />
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/styleHome.css') }}" />
+
+    <script type="module" src="https://unpkg.com/ionicons@5.4.0/dist/ionicons/ionicons.esm.js"></script>
+    <script nomodule="" src="https://unpkg.com/ionicons@5.4.0/dist/ionicons/ionicons.js"></script>
+
+    <title>Home</title>
+</head>
+
+<body>
+    <header class="header">
+        <a href="/">
+            <img class="logo" alt="Omnifood logo" src="static/img/omnifood-logo.png" />
+        </a>
+        <nav class="main-nav">
+            <ul class="main-nav-list">
+                <!-- <li><a class="main-nav-link" href="/">Home</a></li> -->
+                <li><a class="main-nav-link" href="/menu">Menu</a></li>
+                {% if not session['admin'] %}
+                <li><a class="main-nav-link" href="/reservations">Reservations</a></li>
+
+                <li><a class="main-nav-link" href="/cart">Cart</a></li>
+                <li><a class="main-nav-link" href="/myorders">My Orders</a></li>
+
+                {% endif %} {%if session['admin'] %}
+                <li><a class="main-nav-link" href="/admininfo">Work Info</a></li>
+                <li><a class="main-nav-link" href="/customersInfo">Customers</a></li>
+                {% endif %} {% if session['CustomerId'] %} {% if not session['admin'] %}
+                <li><a class="main-nav-link nav-cta" href="/userhomepage"><span class="glyphicon glyphicon-user"></span>&nbsp;&nbsp;&nbsp;{{session['Customername']}}</a></li>
+                {% endif %}
+                <li><a class="main-nav-link nav-cta" href="/logout">Logout</a></li>
+                {%else%}
+                <li><a class="main-nav-link nav-cta" href="/login"><span class="glyphicon glyphicon-user"></span>&nbsp;&nbsp;Log in</a></li>
+                {% endif %}
+            </ul>
+        </nav>
+    </header>
+    <main>
+        <section class="section-hero">
+            <div class="hero">
+                <div class="hero-text-box">
+                    <h1 style="font-family: 'Kaushan Script', cursive;" class="heading-primary">
+                        A delicious meal delivered to your doorstep, whenever you want
+                    </h1>
+                    <p style="font-family: 'Kaushan Script', cursive;" class="hero-description">
+                        Life’s too short for boring food. Order now and get your favourite food to have it your way. You deserve it!
+                    </p>
+                    <a href="/menu" class="btn btn--full margin-right-sm">Order Now</a
+            >
+            <a href="#section-meals" class="btn btn--outline">Learn more &darr;</a>
+                    <div class="delivered-meals">
+                        <!-- <div class="delivered-imgs">
+                            <img src="static/img/customers/customer-1.jpg" alt="Customer photo" />
+                            <img src="static/img/customers/customer-2.jpg" alt="Customer photo" />
+                            <img src="static/img/customers/customer-3.jpg" alt="Customer photo" />
+                            <img src="static/img/customers/customer-4.jpg" alt="Customer photo" />
+                            <img src="static/img/customers/customer-5.jpg" alt="Customer photo" />
+                            <img src="static/img/customers/customer-6.jpg" alt="Customer photo" />
+                        </div> -->
+                        <!-- <p class="delivered-text">
+                            <span>2,000+</span> meals delivered last year!
+                        </p> -->
+                    </div>
+                </div>
+                <div class="hero-img-box">
+                    <img src="static/img/My post.png" class="hero-img" alt="Woman enjoying food, meals in storage container, and food bowls on a table" />
+                </div>
+            </div>
+        </section>
+
+        <section id="section-meals" class="section-meals">
+            <div class="container center-text">
+                <span class="subheading">Meals</span>
+                <h2 class="heading-secondary">
+                    Best Sellers
+                </h2>
+            </div>
+
+            <div class="container grid grid--3-cols margin-bottom-md">
+                <div class="meal">
+                    <img src="static/img/menu/2.png" class="meal-img" alt="Veg Spring Roll" />
+                    <div class="meal-content">
+                        <div class="meal-tags">
+                            <span class="tag tag--veg">Vegetarian</span>
+                        </div>
+                        <p class="meal-title">Veg Spring Roll</p>
+                        <ul class="meal-attributes">
+                            <li class="meal-attribute">
+                                <ion-icon class="meal-icon" name="pricetag-outline"></ion-icon>
+                                <span><strong>Price: </strong>₹ 160</span>
+                            </li>
+                            <li class="meal-attribute">
+                                <ion-icon class="meal-icon" name="star-outline"></ion-icon>
+                                <span><strong>4.9</strong> rating (537)</span>
+                            </li>
+                            <li class="meal-attribute">
+                                <span class="meal-attribute-description"><strong></strong>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Dignissimos, sapiente.</span>
+                            </li>
+                        </ul>
+                        <!-- <form action="/add_to_cart" method="POST">
+              <button name="addDishId" >Add to cart</button></form> -->
+                    </div>
+                </div>
+
+                <div class="meal">
+                    <img src="static/img/menu/5.png" class="meal-img" alt="Spicy Paneer Grilled Burger" />
+                    <div class="meal-content">
+                        <div class="meal-tags">
+                            <span class="tag tag--nonVeg">Non-Vegetarian</span>
+                        </div>
+                        <p class="meal-title">Chicken Wings with Hot Sauce</p>
+                        <ul class="meal-attributes">
+                            <li class="meal-attribute">
+                                <ion-icon class="meal-icon" name="pricetag-outline"></ion-icon>
+                                <span><strong>Price: </strong>₹ 200</span>
+                            </li>
+                            <li class="meal-attribute">
+                                <ion-icon class="meal-icon" name="star-outline"></ion-icon>
+                                <span><strong>4.9</strong> rating (537)</span>
+                            </li>
+                            <li class="meal-attribute">
+                                <span class="meal-attribute-description"><strong></strong>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Dignissimos, sapiente.</span>
+                            </li>
+                        </ul>
+                        <!-- <form action="/add_to_cart" method="POST">
+              <button name="addDishId" >Add to cart</button></form> -->
+                    </div>
+                </div>
+
+
+                <div class="diets">
+                    <h3 class="heading-tertiary">Types of food available:</h3>
+                    <ul class="list">
+                        <li class="list-item">
+                            <ion-icon class="list-icon" name="checkmark-outline"></ion-icon>
+                            <span>Soups</span>
+                        </li>
+                        <li class="list-item">
+                            <ion-icon class="list-icon" name="checkmark-outline"></ion-icon>
+                            <span>Appetisers</span>
+                        </li>
+                        <li class="list-item">
+                            <ion-icon class="list-icon" name="checkmark-outline"></ion-icon>
+                            <span>Pizza & Pasta</span>
+                        </li>
+                        <li class="list-item">
+                            <ion-icon class="list-icon" name="checkmark-outline"></ion-icon>
+                            <span>Burgers & Sandwiches</span>
+                        </li>
+                        <li class="list-item">
+                            <ion-icon class="list-icon" name="checkmark-outline"></ion-icon>
+                            <span>Main Course</span>
+                        </li>
+                        <li class="list-item">
+                            <ion-icon class="list-icon" name="checkmark-outline"></ion-icon>
+                            <span>Breads</span>
+                        </li>
+                        <li class="list-item">
+                            <ion-icon class="list-icon" name="checkmark-outline"></ion-icon>
+                            <span>Rice and Biryani</span>
+                        </li>
+                        <li class="list-item">
+                            <ion-icon class="list-icon" name="checkmark-outline"></ion-icon>
+                            <span>Desserts</span>
+                        </li>
+                        <li class="list-item">
+                            <ion-icon class="list-icon" name="checkmark-outline"></ion-icon>
+                            <span>Beverages</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="container all-recipes">
+                <a href="/menu" class="link">See all recipes &rarr;</a>
+            </div>
+        </section>
+
+
+        <section class="section-hero">
+            <section class="section-cta">
+                <div class="container">
+                    <div class="cta">
+                        <div class="cta-text-box">
+                            <h2 class="heading-secondary">Get your first meal for free!</h2>
+                            <p class="cta-text">
+                                Healthy, tasty and hassle-free meals are waiting for you. Start eating well today. And the first meal is on us!
+                            </p>
+                            <div class="message" style="color: red;">{{error_message}}</div>
+                            <div class="message" style="color: rgb(11, 174, 196);">{{message}}</div>
+
+                            <form class="cta-form" action="\add_user" method="post" autocomplete="off">
+                                <div>
+                                    <label for="name">Full Name</label>
+                                    <input class="cta-input" name="reg_name" id="name" type="text" placeholder="Enter your name" autocomplete="off" required />
+                                </div>
+
+                                <div>
+                                    <label for="mobileNum">Mobile Number</label>
+                                    <input class="cta-input" name="reg_MobileNum" id="mobileNum" type="text" placeholder="XXXXXXXXXX" autocomplete="off" required />
+                                </div>
+                                <div>
+                                    <label for="email">Email address</label>
+                                    <input class="cta-input" name="reg_Email" id="email" type="email" placeholder="me@example.com" autocomplete="off" required />
+                                </div>
+                                <div>
+                                    <label for="password">Create Password</label>
+                                    <input class="cta-input" name="reg_Password" id="password" type="password" placeholder="Enter Password" autocomplete="off" required />
+                                </div>
+
+                                <div>
+                                    <label for="address">Address</label>
+                                    <input class="cta-input" name="reg_Address" id="address" type="text" placeholder="H.No, Street, City" autocomplete="off" required />
+                                </div>
+
+                                <div>
+                                    <label for="select-where">Where did you hear from us?</label>
+                                    <select name="marketing" id="select-where" class="cta-input" style="color: rgb(121, 121, 121)">
+                    <option value="" style="color: rgb(121, 121, 121)">Please choose one option:</option>
+                    <option value="friends">Friends and family</option>
+                    <option value="youtube">YouTube video</option>
+                    <option value="podcast">Podcast</option>
+                    <option value="ad">Facebook ad</option>
+                    <option value="others">Others</option>
+                  </select>
+                                </div>
+
+                                <button class="btn btn--full">Sign up now</button>
+
+                                <!-- <input type="checkbox" />
+                <input type="number" /> -->
+                            </form>
+                            <a href="/login" class="link-login-signup">Already have an account? Login here</a>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </section>
+    </main>
+
+    <footer class="footer">
+        <div class="container grid grid--footer">
+            <div class="logo-col">
+                <a href="#" class="footer-logo">
+                    <img class="logo" alt="Omnifood logo" src="static/img/omnifood-logo.png" />
+                </a>
+
+                <ul class="social-links">
+                    <li>
+                        <a class="footer-link" href="#">
+                            <ion-icon class="social-icon" name="logo-instagram"></ion-icon>
+                        </a>
+                    </li>
+                    <li>
+                        <a class="footer-link" href="#">
+                            <ion-icon class="social-icon" name="logo-facebook"></ion-icon>
+                        </a>
+                    </li>
+                    <li>
+                        <a class="footer-link" href="#">
+                            <ion-icon class="social-icon" name="logo-twitter"></ion-icon>
+                        </a>
+                    </li>
+                </ul>
+
+                <p class="copyright">
+                    Copyright &copy; 2021 by FML, Inc. All rights reserved.
+                </p>
+            </div>
+            <div class="address-col">
+                <p class="footer-heading">Contact us</p>
+                <address class="contacts">
+            <p class="address">
+              AAAAADDDDRRRREEESSSSS
+              <BR></BR>
+              AAAAADDDDRRRREEESSSSS
+            </p>
+            <p>
+              <a class="footer-link" href="">415-201-6370</a
+              ><br />
+              <a class="footer-link" href=""
+                >hello@fml.com</a
+              >
+            </p>
+          </address>
+            </div>
+            <nav class="nav-col">
+                <p class="footer-heading">Account</p>
+                <ul class="footer-nav">
+                    <li><a class="footer-link" href="#">Create account</a></li>
+                    <li><a class="footer-link" href="#">Sign in</a></li>
+                    <li><a class="footer-link" href="#">iOS app</a></li>
+                    <li><a class="footer-link" href="#">Android app</a></li>
+                </ul>
+            </nav>
+
+            <nav class="nav-col">
+                <p class="footer-heading">Company</p>
+                <ul class="footer-nav">
+                    <li><a class="footer-link" href="#">About FML</a></li>
+                    <li><a class="footer-link" href="#">For Business</a></li>
+                    <li><a class="footer-link" href="#">Cooking partners</a></li>
+                    <li><a class="footer-link" href="#">Careers</a></li>
+                </ul>
+            </nav>
+
+            <nav class="nav-col">
+                <p class="footer-heading">Resources</p>
+                <ul class="footer-nav">
+                    <li><a class="footer-link" href="#">Recipe directory </a></li>
+                    <li><a class="footer-link" href="#">Help center</a></li>
+                    <li><a class="footer-link" href="#">Privacy & terms</a></li>
+                </ul>
+            </nav>
+        </div>
+    </footer>
+
+
+</html>

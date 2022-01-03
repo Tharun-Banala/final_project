@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <link rel="preconnect" href="https://fonts.gstatic.com" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Rubik:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Courgette&family=Kaushan+Script&family=Pacifico&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="{{ url_for('static', filename='css/general.css') }}"
+    />
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="{{ url_for('static', filename='css/styleHome.css') }}"
+    />
+
+    <script
+      type="module"
+      src="https://unpkg.com/ionicons@5.4.0/dist/ionicons/ionicons.esm.js"
+    ></script>
+    <script
+      nomodule=""
+      src="https://unpkg.com/ionicons@5.4.0/dist/ionicons/ionicons.js"
+    ></script>
+
+    <style>
+      body {
+        font-family: "Courgette", cursive;
+        background-color: rgb(250, 240, 207);
+      }
+      .error-message {
+        font-weight: bold;
+        font-size: 2rem;
+        margin-left: 25%;
+        color: red;
+      }
+
+      .message {
+        font-weight: bold;
+        font-size: 2rem;
+        margin-left: 17%;
+        margin-bottom: 6%;
+        color: rgb(197, 2, 67);
+      }
+    </style>
+
+    <title>Register</title>
+  </head>
+
+  <body>
+    <header class="header">
+      <a href="/">
+        <img
+          class="logo"
+          alt="Omnifood logo"
+          src="static/img/omnifood-logo.png"
+        />
+      </a>
+      <nav class="main-nav">
+        <ul class="main-nav-list">
+          <li><a class="main-nav-link" href="/">Home</a></li>
+          <li><a class="main-nav-link" href="/menu">Menu</a></li>
+          <li>
+            <a class="main-nav-link" href="/reservations">Reservations</a>
+          </li>
+          <li><a class="main-nav-link" href="/cart">Cart</a></li>
+          <li><a class="main-nav-link" href="/myorders">My Orders</a></li>
+          {%if session['admin'] %}
+          <li><a class="main-nav-link" href="/admininfo">Work Info</a></li>
+          {% endif %} {% if session['CustomerId'] %} {% if not session['admin']
+          %}
+          <li>
+            <a class="main-nav-link nav-cta" href="/userhomepage"
+              ><span class="glyphicon glyphicon-user"></span
+              >&nbsp;&nbsp;&nbsp;{{session['Customername']}}</a
+            >
+          </li>
+          {% endif %}
+          <li><a class="main-nav-link nav-cta" href="/logout">Logout</a></li>
+          {%else%}
+          <li>
+            <a class="main-nav-link nav-cta" href="/login"
+              ><span class="glyphicon glyphicon-user"></span>&nbsp;&nbsp;Log
+              in</a
+            >
+          </li>
+          {% endif %}
+        </ul>
+      </nav>
+    </header>
+    <main>
+      <section class="section-hero">
+        <section class="section-cta">
+          <div class="container">
+            <div class="cta">
+              <div class="cta-text-box">
+                <h2 class="heading-secondary">Get your first meal for free!</h2>
+                <p class="cta-text">
+                  Healthy, tasty and hassle-free meals are waiting for you.
+                  Start eating well today. And the first meal is on us!
+                </p>
+                <div class="message" style="color: red">{{error_message}}</div>
+                <div class="message" style="color: rgb(11, 174, 196)">
+                  {{message}}
+                </div>
+
+                <form
+                  class="cta-form"
+                  action="\add_user"
+                  method="post"
+                  autocomplete="off"
+                >
+                  <div>
+                    <label for="name">Full Name</label>
+                    <input
+                      class="cta-input"
+                      name="reg_name"
+                      id="name"
+                      type="text"
+                      placeholder="Enter your name"
+                      autocomplete="off"
+                      required
+                    />
+                  </div>
+
+                  <div>
+                    <label for="mobileNum">Mobile Number</label>
+                    <input
+                      class="cta-input"
+                      name="reg_MobileNum"
+                      id="mobileNum"
+                      type="text"
+                      placeholder="XXXXXXXXXX"
+                      autocomplete="off"
+                      required
+                    />
+                  </div>
+                  <div>
+                    <label for="email">Email address</label>
+                    <input
+                      class="cta-input"
+                      name="reg_Email"
+                      id="email"
+                      type="email"
+                      placeholder="me@example.com"
+                      autocomplete="off"
+                      required
+                    />
+                  </div>
+                  <div>
+                    <label for="password">Create Password</label>
+                    <input
+                      class="cta-input"
+                      name="reg_Password"
+                      id="password"
+                      type="password"
+                      placeholder="Enter Password"
+                      autocomplete="off"
+                      required
+                    />
+                  </div>
+
+                  <div>
+                    <label for="address">Address</label>
+                    <input
+                      class="cta-input"
+                      name="reg_Address"
+                      id="address"
+                      type="text"
+                      placeholder="H.No, Street, City"
+                      autocomplete="off"
+                      required
+                    />
+                  </div>
+
+                  <div>
+                    <label for="select-where"
+                      >Where did you hear from us?</label
+                    >
+                    <select
+                      name="marketing"
+                      id="select-where"
+                      class="cta-input"
+                      required
+                    >
+                      <option value="">Please choose one option:</option>
+                      <option value="friends">Friends and family</option>
+                      <option value="youtube">YouTube video</option>
+                      <option value="podcast">Podcast</option>
+                      <option value="ad">Facebook ad</option>
+                      <option value="others">Others</option>
+                    </select>
+                  </div>
+
+                  <button class="btn btn--form">Sign up now</button>
+
+                  <!-- <input type="checkbox" />
+                <input type="number" /> -->
+                </form>
+                <a href="/login" class="link-login-signup"
+                  >Already have an account? Login here</a
+                >
+              </div>
+            </div>
+          </div>
+        </section>
+      </section>
+    </main>
+  </body>
+</html>

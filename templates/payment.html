@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <link rel="preconnect" href="https://fonts.gstatic.com" />
+    <link href="https://fonts.googleapis.com/css2?family=Rubik:wght@400;500;600;700&display=swap" rel="stylesheet" />
+
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/general.css') }}" />
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/styleHome.css') }}" />
+    <link href="https://fonts.googleapis.com/css2?family=Courgette&family=Kaushan+Script&family=Pacifico&display=swap" rel="stylesheet">
+    <script type="module" src="https://unpkg.com/ionicons@5.4.0/dist/ionicons/ionicons.esm.js"></script>
+    <script nomodule="" src="https://unpkg.com/ionicons@5.4.0/dist/ionicons/ionicons.js"></script>
+
+    <style>
+        body {
+            font-family: "Courgette", cursive;
+            background-color: rgb(250, 240, 207);
+        }
+        
+        .error-message {
+            font-weight: bold;
+            font-size: 2rem;
+            margin-left: 25%;
+            color: red;
+        }
+        
+        .message {
+            font-weight: bold;
+            font-size: 2rem;
+            margin-left: 17%;
+            margin-bottom: 6%;
+            color: rgb(197, 2, 67);
+        }
+    </style>
+
+    <title>Payment</title>
+</head>
+
+<body>
+    <header class="header">
+        <a href="/">
+            <img class="logo" alt="Omnifood logo" src="static/img/omnifood-logo.png" />
+        </a>
+        <nav class="main-nav">
+            <ul class="main-nav-list">
+                <!-- <li><a class="main-nav-link" href="/">Home</a></li> -->
+                <!-- <li><a class="main-nav-link" href="/menu">Menu</a></li>
+          <li>
+            <a class="main-nav-link" href="/reservations">Reservations</a>
+          </li> -->
+                <li><a class="main-nav-link nav-cta" href="/cart">Back to Cart</a></li>
+                <!-- <li><a class="main-nav-link" href="/myorders">My Orders</a></li>
+          <li><a class="main-nav-link" href="#">About Us</a></li>
+          <li><a class="main-nav-link nav-cta" href="/login">Login</a></li> -->
+            </ul>
+        </nav>
+    </header>
+    <main>
+        <section class="section-cta">
+            <div class="container">
+                <div class="cta">
+                    <div class="cta-text-box">
+                        <h2 class="heading-secondary">Just one last step to get your food!</h2>
+                        <p class="cta-text">
+                            Complete the payment and your food will be enroute to your location
+                        </p>
+                        <div class="message" style="color: rgb(206, 0, 0);">{{error_message}}</div>
+                        <div class="message" style="color: rgb(206, 0, 0);">{{balance_message}}</div>
+                        <div class="message" style="color: rgb(206, 0, 0);">{{bill_message}}</div>
+                        <div class="message" style="color: rgb(11, 174, 196);">{{message}}</div>
+
+                        <form class="cta-form" action="/place_order" method="post" autocomplete="off">
+                            <div>
+                                <label for="select-where">Select a payment method</label>
+                                <select name="payment_method" id="select-where" class="cta-input" required>
+                    <option value="no_option">Please choose one option:</option>
+                    <option value="cod">Cash On Delivery</option>
+                    <option value="ewallet">From E-Wallet</option>
+                  </select>
+                            </div>
+
+                            <button class="btn btn--form">Proceed</button>
+
+                            <!-- <input type="checkbox" />
+                <input type="number" /> -->
+                        </form>
+
+                    </div>
+                    <!-- <div
+              class="cta-img-box"
+              role="img"
+              aria-label="Woman enjoying food"
+            ></div> -->
+                </div>
+            </div>
+        </section>
+    </main>
+</body>
+
+</html>

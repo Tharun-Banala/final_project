@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <link rel="preconnect" href="https://fonts.gstatic.com" />
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.2/dist/js/bootstrap.bundle.min.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Rubik:wght@400;500;600;700&display=swap" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Courgette&family=Kaushan+Script&family=Pacifico&display=swap" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/general.css') }}" />
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/styleHome.css') }}" />
+
+    <script type="module" src="https://unpkg.com/ionicons@5.4.0/dist/ionicons/ionicons.esm.js"></script>
+    <script nomodule="" src="https://unpkg.com/ionicons@5.4.0/dist/ionicons/ionicons.js"></script>
+
+    <style>
+        .error-message {
+            font-weight: bold;
+            font-size: 2rem;
+            margin-left: 25%;
+            color: red;
+        }
+        
+        body {
+            font-family: "Courgette", cursive;
+            background-color: rgb(250, 240, 207);
+        }
+        
+        .message {
+            font-weight: bold;
+            font-size: 2rem;
+            margin-left: 17%;
+            margin-bottom: 6%;
+            color: rgb(197, 2, 67);
+        }
+    </style>
+
+    <title>Login</title>
+</head>
+
+<body>
+    <header class="header">
+        <a href="/">
+            <img class="logo" alt="Omnifood logo" src="static/img/omnifood-logo.png" />
+        </a>
+        <nav class="main-nav">
+            <ul class="main-nav-list">
+                <!-- <li><a class="main-nav-link" href="/">Home</a></li> -->
+                <li><a class="main-nav-link" href="/menu">Menu</a></li>
+                <li>
+                    {% if not session['admin'] %}
+                    <a class="main-nav-link" href="/reservations">Reservations</a>
+                </li>
+                <li><a class="main-nav-link" href="/cart">Cart</a></li>
+                <li><a class="main-nav-link" href="/myorders">My Orders</a></li>
+                {% endif %}
+                <li><a class="main-nav-link nav-cta" href="/login">Login</a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        <section class="section-cta">
+            <div class="container">
+                <div class="cta">
+                    <div class="cta-text-box">
+                        <h2 class="heading-secondary">Hungry?</h2>
+                        <p class="cta-text">
+                            What are you waiting for? Login and order your favourite food!
+                        </p>
+                        <div class="error-message">{{error_message}}</div>
+                        <div class="message">{{after_reg_message}}</div>
+                        <div class="message">{{message}}</div>
+
+                        <form class="cta-form" action="\login_validation" method="post">
+                            <div>
+                                <label for="Email">Enter your Email Address</label>
+                                <input class="cta-input" name="Email" id="Email" type="email" placeholder="me@example.com" required autofocus />
+                            </div>
+
+                            <div>
+                                <label for="password">Enter Password</label>
+                                <input class="cta-input" name="password" id="password" type="password" placeholder="Password" required />
+                            </div>
+
+                            <div class="container" style="visibility: hidden;">
+                                <div class="form-check form-switch">
+                                    <input class="form-check-input" type="checkbox" id="Administratorswitch" name="Administrator" value="yes" checked>
+                                    <h1>Administrator</h1>
+                                </div>
+                            </div>
+                            <button class="btn btn--form">
+                  Continue
+                </button>
+
+                            <!-- <input type="checkbox" />
+                <input type="number" /> -->
+                        </form>
+                        <a href="/delivery_agent_login" class="link-login-signup">Delivery agents can login here</a
+              >
+            </div>
+            
+          </div>
+        </div>
+      </section>
+    </main>
+  </body>
+</html>

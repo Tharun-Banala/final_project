@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <link rel="preconnect" href="https://fonts.gstatic.com" />
+    <link href="https://fonts.googleapis.com/css2?family=Rubik:wght@400;500;600;700&display=swap" rel="stylesheet" />
+
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/general.css') }}" />
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/styleHome.css') }}" />
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/styleMenu.css') }}" />
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+
+    <style>
+        .category-heading {
+            font-size: 7rem;
+            font-weight: 900;
+            /* color: #fff; */
+            color: #333;
+            text-align: center;
+            text-transform: capitalize;
+            letter-spacing: 0.5rem;
+            text-shadow: 0.3rem 0.3rem 0.3rem #000;
+            margin-bottom: 5%;
+            margin-top: 5%;
+        }
+        
+        .add-to-cart {
+            background-color: orange;
+            margin-top: 8%;
+            margin-left: 12%;
+        }
+    </style>
+
+    <script type="module" src="https://unpkg.com/ionicons@5.4.0/dist/ionicons/ionicons.esm.js"></script>
+    <script nomodule="" src="https://unpkg.com/ionicons@5.4.0/dist/ionicons/ionicons.js"></script>
+
+    <title>Menu</title>
+</head>
+
+<body>
+    <header class="header">
+        <a href="/">
+            <img class="logo" alt="Omnifood logo" src="static/img/omnifood-logo.png" />
+        </a>
+        <nav class="main-nav">
+            <ul class="main-nav-list">
+                <!-- <li><a class="main-nav-link" href="/">Home</a></li> -->
+                <li><a class="main-nav-link" href="/">Home</a></li>
+                <li><a class="main-nav-link" href="/menu">Menu</a></li>
+                {% if not session['admin'] %}
+                <li><a class="main-nav-link" href="/reservations">Reservations</a></li>
+                <li><a class="main-nav-link" href="/cart">Cart</a></li>
+                <li><a class="main-nav-link" href="/myorders">My Orders</a></li>
+                {% endif %} {%if session['admin'] %}
+                <li><a class="main-nav-link" href="/admininfo">Work Info</a></li>
+                {% endif %} {% if session['CustomerId'] %} {% if not session['admin'] %}
+                <li><a class="main-nav-link nav-cta" href="/userhomepage"><span class="glyphicon glyphicon-user"></span>&nbsp;&nbsp;&nbsp;{{session['Customername']}}</a></li>
+                {% endif %}
+                <li><a class="main-nav-link nav-cta" href="/logout">Logout</a></li>
+                {%else%}
+                <li><a class="main-nav-link nav-cta" href="/login"><span class="glyphicon glyphicon-user"></span>&nbsp;&nbsp;Log in</a></li>
+                {% endif %}
+            </ul>
+        </nav>
+    </header>
+    <form action="/changeconts" method="post" enctype="multipart/form-data">
+        <div class="container col-sm-6 " style="margin-left: 30%;">
+            <div class="meal" style=" height: 100%; width: 80%; border: solid 5px pink;">
+                <div class="meal-content">
+                    {% if dish==None %}
+                    <img src="../static/img/addone.png" class="meal-img" alt="Dish image" />
+                    <br>
+                    <br>
+                    <label for="img" style="font-size:large; font-weight: bolder;">Dish Image</label>
+                    <input type="file" id="img" name="image" alt="image input"> {%else%}
+                    <img src="../static/img/menu/{{dish[0]}}.png" class="meal-img" alt="Dish image" />
+                    <br>
+                    <br>
+                    <label for="img" style="font-size:large; font-weight: bolder;">Update Existing Image?</label>
+                    <input type="file" id="img" name="image" alt="image input"> {% endif %}
+                    <br>
+                    <div class="meal-tags">
+                        <label for="cat" style="font-size:large; font-weight: bolder;"> Vegetarian/Non Vegitarian</label>
+                        <input name="vn" id="cat" value="{{dish[4]}}" list="vn">
+                        <datalist id="vn">
+                    <option value="V" >Vegetarian</option>
+                    <option value="N" >Non Vegetarian</option>
+                  </datalist>
+                    </div>
+                    <br>
+                    <label for="title" style="font-size:large; font-weight: bolder;"> Dish Name</label>
+                    <input name="title" id="title" type="text" value="{{dish[1]}}">
+                    <br>
+                    <br>
+                    <label for="categories" style="font-size:large; font-weight: bolder;">Food Category</label>
+                    <input id="categories" list="cats" name="CategoryId" value="{{dish[2]}}">
+                    <datalist id="cats">
+                  {%for i in cat%}
+                    <option value="{{i[0]}}" >{{i[1]}}</option>
+                  {%endfor%}
+                </datalist>
+                    <br>
+                    <br>
+                    <ion-icon class="meal-icon" name="pricetag-outline"></ion-icon>
+                    <label for="price" style="font-size:large; font-weight: bolder;"> Price: ₹</label>
+                    <input name="price" id="price" value="{{dish[3]}}" type="number">
+                    <br>
+                    <br>
+                    <label for="description" style="font-size:large; font-weight: bolder;"> Food Description</label>
+                    <br>
+                    <textarea id="description" name="description" rows="4" cols="70">{{dish[5]}}</textarea>
+                </div>
+                <div class="container" style="align-content: center; padding-left: 40%;padding-bottom: 30px;">
+                    {% if dish==None %}
+                    <button type="submit" class="btn btn-info btn-lg" name="dishid" value="{{mx}}">submit</button> {%else%}
+                    <button type="submit" class="btn btn-info btn-lg" name="dishid" value="{{dish[0]}}">submit</button> {% endif %}
+                </div>
+            </div>
+        </div>
+    </form>
+</body>
+
+</html>

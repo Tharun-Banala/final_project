@@ -1,0 +1,547 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <link rel="preconnect" href="https://fonts.gstatic.com" />
+    <link href="https://fonts.googleapis.com/css2?family=Rubik:wght@400;500;600;700&display=swap" rel="stylesheet" />
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Courgette&family=Kaushan+Script&family=Pacifico&display=swap" rel="stylesheet">
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/general.css') }}" />
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/styleHome.css') }}" />
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/styleMenu.css') }}" />
+
+
+    <style>
+        body {
+            font-family: "Courgette", cursive;
+            background-color: rgb(250, 240, 207);
+        }
+        
+         ::placeholder {
+            font-size: large;
+        }
+        
+        .category-heading {
+            font-size: 7rem;
+            font-weight: 900;
+            /* color: #fff; */
+            color: #333;
+            text-align: center;
+            text-transform: capitalize;
+            letter-spacing: 0.5rem;
+            text-shadow: 0.3rem 0.3rem 0.3rem #000;
+            margin-bottom: 5%;
+            margin-top: 5%;
+        }
+        
+        .add-to-cart {
+            background-color: orange;
+            margin-top: 8%;
+            margin-left: 12%;
+        }
+        
+        .form-control {
+            border: none;
+            border-bottom: 1px solid #ccc;
+            padding-left: 0;
+            padding-right: 0;
+            border-radius: 0;
+            background: none;
+            font-size: large;
+        }
+        
+        .form2 {
+            text-align: center;
+        }
+        
+        .form-control:active,
+        .form-control:focus {
+            outline: none;
+            -webkit-box-shadow: none;
+            box-shadow: none;
+            border-color: #000;
+        }
+    </style>
+
+    <script type="module" src="https://unpkg.com/ionicons@5.4.0/dist/ionicons/ionicons.esm.js"></script>
+    <script nomodule="" src="https://unpkg.com/ionicons@5.4.0/dist/ionicons/ionicons.js"></script>
+
+    <title>Menu</title>
+</head>
+
+<body>
+    <header class="header" style="height: 12rem; padding: 0 4.8rem;">
+        <a href="/">
+            <img class="logo" alt="Omnifood logo" src="static/img/omnifood-logo.png" />
+        </a>
+        <nav class="main-nav">
+            <ul class="main-nav-list">
+                <!-- <li><a class="main-nav-link " href="/ ">Home</a></li> -->
+                <li><a class="main-nav-link " style="font-size: 2.3rem " href="/ ">Home</a></li>
+                {% if not session['admin'] %}
+                <li><a class="main-nav-link " style="font-size: 2.3rem " href="/reservations ">Reservations</a></li>
+                <li><a class="main-nav-link " style="font-size: 2.3rem " href="/cart ">Cart</a></li>
+                <li><a class="main-nav-link " style="font-size: 2.3rem " href="/myorders ">My Orders</a></li>
+                {% endif %} {%if session['admin'] %}
+                <li><a class="main-nav-link " style="font-size: 2.3rem " href="/admininfo ">Work Info</a></li>
+                <li><a class="main-nav-link " style="font-size: 2.3rem " href="/customersInfo ">Customers</a></li>
+                {% endif %} {% if session['CustomerId'] %} {% if not session['admin'] %}
+                <li><a class="main-nav-link nav-cta " style="font-size: 2.3rem; padding: 1.7rem 3rem; " href="/userhomepage "><span class="glyphicon glyphicon-user "></span>&nbsp;&nbsp;&nbsp;{{session['Customername']}}</a></li>
+                {% endif %}
+                <li><a class="main-nav-link nav-cta " style="font-size: 2.3rem; padding: 1.7rem 3rem; " href="/logout ">Logout</a></li>
+                {%else%}
+                <li><a class="main-nav-link nav-cta " style="font-size: 2.3rem " href="/login "><span class="glyphicon glyphicon-user "></span>&nbsp;&nbsp;Log in</a></li>
+                {% endif %}
+            </ul>
+        </nav>
+    </header>
+
+    <section style=" background-color: rgb(250, 240, 207); " class="section ">
+
+        <h1 class="section-heading">Food Categories</h1>
+        <div class="gallery">
+            <a href="#1" class="gallery-link">
+                <img src="static/img/categories/1.jpg" class="food-img" />
+                <h3 class="food-name">Soups</h3>
+                <p class="food-description">
+                    Base flavors for soups and stews include meaty and roasted ingredients for a hearty, filling taste.
+                </p>
+            </a>
+            <a href="#2" class="gallery-link">
+                <img src="static/img/categories/2.jpg" class="food-img" />
+                <h3 class="food-name">Appetisers</h3>
+                <p class="food-description">
+                    A food that stimulates the appetite and is usually served before a meal. The appetizers included shrimp with cocktail sauce, vegetables and dips, cheeses, and fruits.
+                </p>
+            </a>
+            <a href="#3" class="gallery-link">
+                <img src="static/img/categories/3.jpg" class="food-img" />
+                <h3 class="food-name">Pizza & Pasta</h3>
+                <p class="food-description">
+                    Pizza, dish of Italian origin consisting of a flattened disk of bread dough topped with some combination of olive oil, oregano, tomato, olives, mozzarella or other cheese, and many other ingredients, baked quickly
+                </p>
+            </a>
+            <a href="#4" class="gallery-link">
+                <img src="static/img/categories/4.jpg" class="food-img" />
+                <h3 class="food-name">Burgers & Sandwiches</h3>
+                <p class="food-description">
+                    The best burgers and sandwiches offer a combination of tastes and textures – sweet, sour, salt – with a bit of crunch.
+                </p>
+            </a>
+            <a href="#5" class="gallery-link">
+                <img src="static/img/categories/5.jpg" class="food-img" />
+                <h3 class="food-name">Main Course</h3>
+                <p class="food-description">
+                    The main course is the most complex and substantive dish on the menu and typically features meat or game with vegetable and starch accompaniments.
+                </p>
+            </a>
+            <a href="#6" class="gallery-link">
+                <img src="static/img/categories/6.jpg" class="food-img" />
+                <h3 class="food-name">Breads </h3>
+                <p class="food-description">
+                    A kind of food made of flour or meal that has been mixed with milk or water, made into a dough or batter, with or without yeast or other leavening agent, and baked.
+                </p>
+            </a>
+            <a href="#7" class="gallery-link">
+                <img src="static/img/categories/7.jpg" class="food-img" />
+                <h3 class="food-name">Rice & Biryani</h3>
+                <p class="food-description">
+                    It's fiery and aromatic, and heady with black peppercorns, star anise, and cinnamon. The region's biryani incorporates all of these flavors, with an added dose of heat from ground green chiles.
+                </p>
+            </a>
+            <a href="#8" class="gallery-link">
+                <img src="static/img/categories/8.jpg" class="food-img" />
+                <h3 class="food-name">Desserts</h3>
+                <p class="food-description">
+                    Dessert is a sweet course, involving pastry, pudding, ice cream, or cake.
+                </p>
+            </a>
+            <a href="#9" class="gallery-link">
+                <img src="static/img/categories/9.jpeg" class="food-img" />
+                <h3 class="food-name">Beverages</h3>
+                <p class="food-description">
+                    Tasty and refreshing drinks which usually includes milkshakes, mocktails, etc.
+                </p>
+            </a>
+        </div>
+    </section><br><br><br>
+    <div class="row">
+        <div class="col-md-3 form-group mb-5">
+            <input id="filter" class="form-control " onkeyup="search_dish() " type="text " placeholder="search for a dish ">
+        </div>
+        <div class="col-md-3 form-group mb-5">
+            <input id="filter1" class="form-control" onkeyup="search_veg()" type="text" placeholder="search for veg/non-veg">
+        </div>
+        <div class="col-md-3 form-group mb-5">
+            <input id="filter2" class="form-control " onkeyup="search_minprice() " type="text " placeholder="search for a min price ">
+        </div>
+        <div class="col-md-3 form-group mb-5">
+            <input id="filter3" class="form-control" onkeyup="search_maxprice()" type="text" placeholder="search for a max price">
+        </div>
+    </div>
+    <br><br>
+    <div align="center">
+        {% if session['admin'] %}
+        <form action="/menuchange" method="post">
+            <button type="submit" class="btn btn-warning btn-lg" name="adon" value="yes">Add New Item to menu</button>
+        </form>
+        {% endif %}
+    </div>
+    <div class="categories">
+        {%for foodCategory in foodCategories%}
+        <p id={{ "{}".format(foodCategory[0])}}>
+            <h2 class="category-heading">{{foodCategory[1]}}</h2>
+        </p>
+        <div class="container grid grid--3-cols margin-bottom-md">
+            {%for dish in menu%} {%if dish[2]==foodCategory[0]%} {% if dish[6] %}
+            <div class="meal" style="border: solid 5px green;">
+                <img src="static/img/menu/{{dish[0]}}.png" class="meal-img" alt="Dish image" />
+                <div class="meal-content">
+                    <div class="meal-tags">
+                        {%if dish[4]=='V'%}
+                        <span class="tag tag--veg">Vegetarian</span> {%else%}
+                        <span class="tag tag--nonVeg">Non-Vegetarian</span> {%endif%}
+                    </div>
+                    <p class="meal-title">{{dish[1]}}</p>
+                    <ul class="meal-attributes">
+                        <li class="meal-attribute">
+                            <ion-icon class="meal-icon" name="pricetag-outline"></ion-icon>
+                            <span><strong>Price: </strong> ₹ <span class="price">{{dish[3]}}</span></span>
+                        </li>
+                        <li class="meal-attribute">
+                            <ion-icon class="meal-icon" name="star-outline"></ion-icon>
+                            <span><strong>4.9</strong> rating (537)</span>
+                        </li>
+                        <!-- <ion-icon
+                          class="meal-icon"
+                          name="restaurant-outline"
+                        ></ion-icon> -->
+                        <li class="meal-attribute">
+                            <!-- <ion-icon
+                            class="meal-icon"
+                            name="restaurant-outline"
+                          ></ion-icon> -->
+                            <span class="meal-attribute-description"><strong>Lorem ipsum dolor sit amet consectetur adipisicing elit. Assumenda, quis?</strong></span>
+                            <!-- <span class="meal-attribute-description"><strong>{{ dish[5] }}</strong></span> -->
+                        </li>
+                    </ul>
+                    <form action="/add_to_cart" method="POST">
+                        <button name="addDishId" value={{ "{}".format(dish[0])}} class="  add-to-cart btn btn-lg btn--full margin-right-sm">Add to cart</button>
+                    </form>
+                    <div class="container" style="margin: 5px;">
+                        <form action="/menuchange" method="post">
+                            {% if session['admin'] %}
+                            <button type="submit" class="btn btn-info" name="changeit" value="{{dish[0]}}">change</button>
+                            <button type="submit" class="btn btn-danger" name="removeit" value="{{dish[0]}}">remove</button> {%endif%}
+                        </form>
+                    </div>
+                </div>
+
+            </div>
+            {% elif session['admin'] %}
+            <div class="meal" style="border: solid 5px red ;">
+                <img src="static/img/menu/{{dish[0]}}.png" class="meal-img" alt="Dish image" />
+                <div class="meal-content">
+                    <div class="meal-tags">
+                        {%if dish[4]=='V'%}
+                        <span class="tag tag--veg">Vegetarian</span> {%else%}
+                        <span class="tag tag--nonVeg">Non-Vegetarian</span> {%endif%}
+                    </div>
+                    <p class="meal-title">{{dish[1]}}</p>
+                    <ul class="meal-attributes">
+                        <li class="meal-attribute">
+                            <ion-icon class="meal-icon" name="pricetag-outline"></ion-icon>
+                            <span><strong>Price: </strong> ₹ <span class="price">{{dish[3]}}</span>{{dish[3]}}</span>
+                        </li>
+                        <li class="meal-attribute">
+                            <ion-icon class="meal-icon" name="star-outline"></ion-icon>
+                            <span><strong>4.9</strong> rating (537)</span>
+                        </li>
+                        <li class="meal-attribute">
+                            <span class="meal-attribute-description"><strong>{{ dish[5] }}</strong></span>
+                        </li>
+                    </ul>
+                    <form action="/add_to_cart" method="POST">
+                        <button name="addDishId" value={{ "{}".format(dish[0])}} class="add-to-cart btn btn-lg btn--full margin-right-sm">Add to cart</button>
+                    </form>
+                    <div class="container" style="margin: 5px;">
+                        <form action="/menuchange" method="post">
+                            {% if session['admin'] %}
+                            <button type="submit" class="btn btn-info" name="changeit" value="{{dish[0]}}">change</button><br>
+                            <button type="submit" name="AddIt" value="{{dish[0]}}" class="btn btn-success"> Add</button> {%endif%}
+                        </form>
+                    </div>
+                </div>
+            </div>
+            {% endif %} {%endif%} {%endfor%}
+        </div>
+        {%endfor%}
+    </div>
+    <script>
+        function search_dish() {
+            let input = document.getElementById('filter').value
+            input = input.toLowerCase();
+            let x = document.getElementsByClassName('meal-title');
+            let y = document.getElementsByClassName('meal');
+            for (i = 0; i < x.length; i++) {
+                if (!x[i].innerHTML.toLowerCase().includes(input)) {
+                    y[i].style.display = "none";
+                } else {
+                    y[i].style.display = "";
+                }
+            }
+        }
+
+        function search_veg() {
+            let input = document.getElementById('filter1').value
+            input = input.toLowerCase();
+            let x = document.getElementsByClassName('tag');
+            let y = document.getElementsByClassName('meal');
+            for (i = 0; i < x.length; i++) {
+                if (!x[i].innerHTML.toLowerCase().includes(input)) {
+                    y[i].style.display = "none";
+                } else {
+                    if (input.includes("veg")) {
+                        if (!x[i].innerHTML.toLowerCase().includes("non")) {
+                            y[i].style.display = "";
+                        } else {
+                            y[i].style.display = "none";
+                        }
+                    } else {
+                        y[i].style.display = "";
+                    }
+                }
+            }
+        }
+
+        function search_minprice() {
+            let input = document.getElementById('filter2').value
+            input = input.toLowerCase();
+            let x = document.getElementsByClassName('price');
+            let y = document.getElementsByClassName('meal');
+            for (i = 0; i < x.length; i++) {
+                if (parseInt(x[i].innerHTML) < parseInt(input)) {
+                    y[i].style.display = "none";
+                } else {
+                    y[i].style.display = "";
+                }
+            }
+        }
+
+        function search_maxprice() {
+            let input = document.getElementById('filter3').value
+            input = input.toLowerCase();
+            let x = document.getElementsByClassName('price');
+            let y = document.getElementsByClassName('meal');
+            for (i = 0; i < x.length; i++) {
+                if (parseInt(x[i].innerHTML) > parseInt(input)) {
+                    y[i].style.display = "none";
+                } else {
+                    y[i].style.display = "";
+                }
+            }
+        }
+    </script>
+</body>
+
+</html>
+
+
+
+
+<!-- <!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <link rel="preconnect" href="https://fonts.gstatic.com" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Rubik:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/general.css') }}" />
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/styleHome.css') }}" />
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/styleMenu.css') }}" />
+
+    <style>
+      .category-heading {
+        font-size: 7rem;
+        font-weight: 900;
+        
+        color: #333;
+        text-align: center;
+        text-transform: capitalize;
+        letter-spacing: 0.5rem;
+        text-shadow: 0.3rem 0.3rem 0.3rem #000;
+        margin-bottom: 5%;
+        margin-top: 5%;
+      }
+
+      .add-to-cart {
+        background-color: orange;
+        margin-top: 8%;
+        margin-left: 12%;
+      }
+    </style>
+
+    <script
+      type="module"
+      src="https://unpkg.com/ionicons@5.4.0/dist/ionicons/ionicons.esm.js"
+    ></script>
+    <script
+      nomodule=""
+      src="https://unpkg.com/ionicons@5.4.0/dist/ionicons/ionicons.js"
+    ></script>
+
+    <title>Menu</title>
+  </head>
+  <body>
+    <header class="header">
+      <a href="/">
+        <img
+          class="logo"
+          alt="Omnifood logo"
+          src="static/img/omnifood-logo.png"
+        />
+      </a>
+      <nav class="main-nav">
+        <ul class="main-nav-list">
+          
+          <li><a class="main-nav-link" href="/menu">Menu</a></li>
+          <li><a class="main-nav-link" href="/reservations">Reservations</a></li>
+          <li><a class="main-nav-link" href="/cart">Cart</a></li>
+          <li><a class="main-nav-link" href="/myorders">My Orders</a></li>
+          <li><a class="main-nav-link" href="#">About Us</a></li>
+          <li><a class="main-nav-link nav-cta" href="/login">Login</a></li>
+        </ul>
+      </nav>
+    </header>
+    <section class="section">
+        <h1 class="section-heading">Food Categories</h1>
+        <div class="gallery">
+          <a href="#1" class="gallery-link">
+            <img src="static/img/categories/1.jpg" class="food-img" />
+            <h3 class="food-name">Soups</h3>
+            <p class="food-description">
+              Base flavors for soups and stews include meaty and roasted ingredients for a hearty, filling taste.
+            </p>
+          </a>
+          <a href="#2" class="gallery-link">
+            <img src="static/img/categories/2.jpg" class="food-img" />
+            <h3 class="food-name">Appetisers</h3>
+            <p class="food-description">
+              A food that stimulates the appetite and is usually served before a meal. The appetizers included shrimp with cocktail sauce, vegetables and dips, cheeses, and fruits.
+            </p>
+          </a>
+          <a href="#3" class="gallery-link">
+            <img src="static/img/categories/3.jpg" class="food-img" />
+            <h3 class="food-name">Pizza & Pasta</h3>
+            <p class="food-description">
+              Pizza, dish of Italian origin consisting of a flattened disk of bread dough topped with some combination of olive oil, oregano, tomato, olives, mozzarella or other cheese, and many other ingredients, baked quickly
+            </p>
+          </a>
+          <a href="#4" class="gallery-link">
+            <img src="static/img/categories/4.jpg" class="food-img" />
+            <h3 class="food-name">Burgers & Sandwiches</h3>
+            <p class="food-description">
+              The best burgers and sandwiches offer a combination of tastes and textures â€“ sweet, sour, salt â€“ with a bit of crunch.
+            </p>
+          </a>
+          <a href="#5" class="gallery-link">
+            <img src="static/img/categories/5.jpg" class="food-img" />
+            <h3 class="food-name">Main Course</h3>
+            <p class="food-description">
+              The main course is the most complex and substantive dish on the menu and typically features meat or game with vegetable and starch accompaniments.
+            </p>
+          </a>
+          <a href="#6" class="gallery-link">
+            <img src="static/img/categories/6.jpg" class="food-img" />
+            <h3 class="food-name">Breads </h3>
+            <p class="food-description">
+              A kind of food made of flour or meal that has been mixed with milk or water, made into a dough or batter, with or without yeast or other leavening agent, and baked.
+            </p>
+          </a>
+          <a href="#7" class="gallery-link">
+            <img src="static/img/categories/7.jpg" class="food-img" />
+            <h3 class="food-name">Rice & Biryani</h3>
+            <p class="food-description">
+              It's fiery and aromatic, and heady with black peppercorns, star anise, and cinnamon. The region's biryani incorporates all of these flavors, with an added dose of heat from ground green chiles.
+            </p>
+          </a>
+          <a href="#8" class="gallery-link">
+            <img src="static/img/categories/8.jpg" class="food-img" />
+            <h3 class="food-name">Desserts</h3>
+            <p class="food-description">
+              Dessert is a sweet course, involving pastry, pudding, ice cream, or cake.
+            </p>
+          </a>
+          <a href="#9" class="gallery-link">
+            <img src="static/img/categories/9.jpeg" class="food-img" />
+            <h3 class="food-name">Beverages</h3>
+            <p class="food-description">
+              Tasty and refreshing drinks which usually includes milkshakes, mocktails, etc.
+            </p>
+          </a>
+        </div>
+      </section>
+
+      <div class="categories">
+        {%for foodCategory in foodCategories%}
+        <p id={{"{}".format(foodCategory[0])}}><h2 class="category-heading">{{foodCategory[1]}}</h2></p>
+        <div class="container grid grid--3-cols margin-bottom-md">
+          {%for dish in menu%}
+            {%if dish[2]==foodCategory[0]%}
+            <div class="meal">
+              <img
+                src="static/img/menu/{{dish[0]}}.png"
+                class="meal-img"
+                alt="Dish image"
+              />
+              <div class="meal-content">
+                <div class="meal-tags">
+                  {%if dish[4]=='V'%}
+                    <span class="tag tag--veg">Vegetarian</span>
+                  {%else%}
+                    <span class="tag tag--nonVeg">Non-Vegetarian</span>
+                  {%endif%}
+                </div>
+                <p class="meal-title">{{dish[1]}}</p>
+                <ul class="meal-attributes">
+                  <li class="meal-attribute">
+                    <ion-icon class="meal-icon" name="pricetag-outline"></ion-icon>
+                    <span><strong>Price: </strong>â‚¹ {{dish[3]}}</span>
+                  </li>
+                  <li class="meal-attribute">
+                    <ion-icon class="meal-icon" name="star-outline"></ion-icon>
+                    <span><strong>4.9</strong> rating (537)</span>
+                  </li>
+                  
+                  <li class="meal-attribute">
+                    
+                    <span class="meal-attribute-description"><strong></strong>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Dignissimos, sapiente.</span>
+                  </li>
+                </ul>
+                <form action="/add_to_cart" method="POST">
+                <button name="addDishId" value={{"{}".format(dish[0])}} class="add-to-cart btn btn--full margin-right-sm">Add to cart</button></form>
+              </div>
+            </div>
+            {%endif%}
+          {%endfor%}       
+        </div>
+        {%endfor%}
+      </div>
+
+  </body>
+</html> -->

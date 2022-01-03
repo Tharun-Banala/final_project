@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <link rel="preconnect" href="https://fonts.gstatic.com" />
+    <link href="https://fonts.googleapis.com/css2?family=Rubik:wght@400;500;600;700&display=swap" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Courgette&family=Kaushan+Script&family=Pacifico&display=swap" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/general.css') }}" />
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/styleHome.css') }}" />
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/styleMenu.css') }}" />
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+
+    <style>
+        .category-heading {
+            font-size: 7rem;
+            font-weight: 900;
+            /* color: #fff; */
+            color: #333;
+            text-align: center;
+            text-transform: capitalize;
+            letter-spacing: 0.5rem;
+            text-shadow: 0.3rem 0.3rem 0.3rem #000;
+            margin-bottom: 5%;
+            margin-top: 5%;
+        }
+        
+        body {
+            font-family: "Courgette", cursive;
+            background-color: rgb(250, 240, 207);
+        }
+        
+        .add-to-cart {
+            background-color: orange;
+            margin-top: 8%;
+            margin-left: 12%;
+        }
+    </style>
+
+    <script type="module" src="https://unpkg.com/ionicons@5.4.0/dist/ionicons/ionicons.esm.js"></script>
+    <script nomodule="" src="https://unpkg.com/ionicons@5.4.0/dist/ionicons/ionicons.js"></script>
+
+    <title>Menu</title>
+</head>
+
+<body>
+    <header class="header">
+        <a href="/">
+            <img class="logo" alt="Omnifood logo" src="static/img/omnifood-logo.png" />
+        </a>
+        <nav class="main-nav">
+            <ul class="main-nav-list">
+                <!-- <li><a class="main-nav-link" href="/">Home</a></li> -->
+                <li><a class="main-nav-link" href="/">Home</a></li>
+                <li><a class="main-nav-link" href="/menu">Menu</a></li>
+                {% if not session['admin'] %}
+                <li><a class="main-nav-link" href="/reservations">Reservations</a></li>
+                <li><a class="main-nav-link" href="/cart">Cart</a></li>
+                <li><a class="main-nav-link" href="/myorders">My Orders</a></li>
+                {% endif %} {%if session['admin'] %}
+                <li><a class="main-nav-link" href="/admininfo">Work Info</a></li>
+                {% endif %} {% if session['CustomerId'] %} {% if not session['admin'] %}
+                <li><a class="main-nav-link nav-cta" href="/userhomepage"><span class="glyphicon glyphicon-user"></span>&nbsp;&nbsp;&nbsp;{{session['Customername']}}</a></li>
+                {% endif %}
+                <li><a class="main-nav-link nav-cta" href="/logout">Logout</a></li>
+                {%else%}
+                <li><a class="main-nav-link nav-cta" href="/login"><span class="glyphicon glyphicon-user"></span>&nbsp;&nbsp;Log in</a></li>
+                {% endif %}
+            </ul>
+        </nav>
+    </header>
+
+    <div class="container">
+        <h2 style="margin-left: 43%; margin-bottom: 2%"><strong>Add Amount</strong</h2>
+    </div>
+    <form action="/update_customer_wallet" method="post">        
+      <input
+        type="number"
+        name="CustomerId"
+        min="1"
+        max="{{customers|length}}"
+        placeholder="CustomerId"
+        required
+        style="font-weight: bold; font-size: 1.5rem; margin-top: 2%; margin-left:30%; width: 15%; padding: 0.2%; border-width: thin;border-radius: 2px;"
+      />
+              
+      <input
+        type="number"
+        name="Amount"
+        min="0"
+        placeholder="Add Amount"
+        required
+        style="font-weight: bold; font-size: 1.5rem; width: 15%; margin-left:3%; padding: 0.2%; border-width: thin;border-radius: 2px;"
+      />
+      
+      <button type="submit" style="font-weight: bold; font-size: 1.5rem; width: 15%; margin-left:3%; padding: 0.2%; border-width: thin;border-radius: 2px;">Update</button>
+      
+    </form>
+    
+    <div class="container">
+        <h2 style="margin-left: 43%; margin-bottom: 3%; margin-top: 5%;"><strong>Customers</strong</h2>
+    </div>
+    <div class="container">
+      <div class="row">
+        <div class="col-sm-2" style="font-weight: 800; font-size: 1.75rem">CustomerId</div>
+        <div class="col-sm-2" style="font-weight: 800; font-size: 1.75rem">Name</div>
+        <div class="col-sm-3" style="font-weight: 800; font-size: 1.75rem">Email</div>
+        <div class="col-sm-2" style="font-weight: 800; font-size: 1.75rem">Mobile Number</div>
+        <div class="col-sm-2" style="font-weight: 800; font-size: 1.75rem">EWallet</div>
+
+      </div>
+      <div class="panel-group" id="accordion">
+        {% for customer in customers %}
+        <div class="panel panel-default">
+          <div class="panel-heading">
+            <h4 class="panel-title">
+                <div class="row">
+                  <div class="col-sm-2">{{customer[0]}}</div>
+                  <div class="col-sm-2">{{customer[1]}}</div>
+                  <div class="col-sm-3">{{customer[2]}}</div>
+                  <div class="col-sm-2">{{customer[3]}}</div>
+                  <div class="col-sm-2">&#8377;{{customer[4]}}</div>  
+            </h4>
+        </div>
+        </div>
+        {% endfor %}
+      </div>
+    
+  </body>
+</html>
